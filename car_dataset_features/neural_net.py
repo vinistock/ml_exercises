@@ -1,4 +1,5 @@
 from sklearn import neural_network
+from sklearn import model_selection
 import numpy as np
 import os
 import sys
@@ -9,24 +10,54 @@ def print_progress():
 
 class NeuralNet:
 	def __init__(self):
-		self.features = "" # Read features from files
-		# self.training
-		# self.test
-		# self.hits
-		# self.accuracy
-		# self.classifier
-		# MLPClassifier(hidden_layer_sizes=(100, ), activation=’relu’, solver=’adam’, alpha=0.0001, batch_size=’auto’, learning_rate=’constant’, learning_rate_init=0.001, power_t=0.5, max_iter=200, shuffle=True, random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9, nesterovs_momentum=True, early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999, epsilon=1e-08, n_iter_no_change=10)[source]¶
+		self.y = []
+		self.x = self.__load_features__()
+		self.x_train = None
+		self.y_train = None
+		self.x_test = None
+		self.y_test = None
+		self.hits = 0
+		self.accuracy = None
+		self.classifier = neural_network.MLPClassifier()
+
+	def __load_features__(self):
+		print("Loading features")
+		features = []
+
+		for file in os.listdir("./features/"):
+			if not file.startswith("."):
+				features.append(np.load("./features/" + file)["arr_0"])
+				self.y.append(file.split("_")[0])
+				print_progress()
+
+		print("\n")
+		return features
 
 	def train(self):
-		# self.classifier.fit(X, y)
-		pass
+		print("Training neural network")
+		self.x_train, self.x_test, self.y_train, self.y_test = model_selection.train_test_split(self.x, self.y, test_size=0.30)
+		self.classifier.fit(self.x_train, self.y_train)
 
 	def predict(self):
-		# self.classifier.predict(X)
-		# count hits
-		pass
+		print("Predicting")
+		predictions = self.classifier.predict(self.x_test)
+		i = 0
+
+		for klass in predictions:
+			if klass == self.y_test[i]:
+				self.hits += 1
+
+			i += 1
+
+		self.accuracy = (100.0 * self.hits) / len(self.x_test)
+
+	def display(self):
+		print("\nResults\n")
+		print("Classified " + `len(self.x_test)` + " images")
+		print("Accuraccy: " + `self.accuracy`)
 
 if __name__ == "__main__":
 	net = NeuralNet()
 	net.train()
 	net.predict()
+	net.display()

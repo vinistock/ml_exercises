@@ -77,13 +77,10 @@ class Network():
 			else:
 				file_name = "gol_" + `i`
 			
-			np.savez_compressed("features/" + file_name + ".npz", features)
+			np.savez_compressed("features/" + file_name + ".npz", features[0])
 			i += 1
 			print_progress()
 
-def main():
+if __name__ == "__main__":
 	loader = ImageLoader()	
 	Network().extract_features(loader.data(), loader.paths())
-
-if __name__ == "__main__":
-    main()
