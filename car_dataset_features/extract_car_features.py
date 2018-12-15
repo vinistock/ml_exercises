@@ -4,7 +4,6 @@ import sys
 from utils import load_model
 import keras.backend as K
 import numpy as np
-import imgaug as ia
 from imgaug import augmenters as iaa
 
 def print_progress():
@@ -46,9 +45,9 @@ class ImageLoader():
 
 			aug_seq = iaa.Sequential(
             [
-                iaa.ContrastNormalization((0.5, 1.0)),
-                iaa.AddToHueAndSaturation((-5, 5)),
-                iaa.SaltAndPepper(p=0.1),
+                # iaa.ContrastNormalization((0.5, 1.0)),
+                # iaa.AddToHueAndSaturation((-5, 5)),
+                # iaa.SaltAndPepper(p=0.1),
             ],
             random_order=True)
 

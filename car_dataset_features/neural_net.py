@@ -18,7 +18,7 @@ class NeuralNet:
 		self.y_test = None
 		self.hits = 0
 		self.accuracy = None
-		self.classifier = neural_network.MLPClassifier()
+		self.classifier = neural_network.MLPClassifier(hidden_layer_sizes = (100, 100, 50,))
 
 	def __load_features__(self):
 		print("Loading features")
@@ -35,7 +35,7 @@ class NeuralNet:
 
 	def train(self):
 		print("Training neural network")
-		self.x_train, self.x_test, self.y_train, self.y_test = model_selection.train_test_split(self.x, self.y, test_size=0.30)
+		self.x_train, self.x_test, self.y_train, self.y_test = model_selection.train_test_split(self.x, self.y, test_size=0.15)
 		self.classifier.fit(self.x_train, self.y_train)
 
 	def predict(self):
