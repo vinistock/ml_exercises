@@ -13,6 +13,8 @@ $ source activate py27
 $ conda install --file requirements.txt
 ```
 
+Observation: imgaug cannot be installed via conda install. Use pip install imgaug instead.
+
 ## Usage
 
 There are two steps to run this exercise: extract features from the images and then using the extracted features to train a classifier.

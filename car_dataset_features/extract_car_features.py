@@ -4,6 +4,8 @@ import sys
 from utils import load_model
 import keras.backend as K
 import numpy as np
+import imgaug as ia
+from imgaug import augmenters as iaa
 
 def print_progress():
 	sys.stdout.write(".")
@@ -41,8 +43,19 @@ class ImageLoader():
 				img = cv2.flip(img, flipCode = 1)
 
 			img = cv2.resize(img, (224, 224))
-			img = img / 255.
-			self.im_data.append(img)
+
+			aug_seq = iaa.Sequential(
+            [
+                iaa.ContrastNormalization((0.5, 1.0)),
+                iaa.AddToHueAndSaturation((-5, 5)),
+                iaa.SaltAndPepper(p=0.1),
+            ],
+            random_order=True)
+
+			img_aug = aug_seq.augment_image(img)
+
+			img_aug = img_aug / 255.
+			self.im_data.append(img_aug)
 			print_progress()
 		
 		print("\n")
