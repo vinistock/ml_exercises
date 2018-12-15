@@ -18,13 +18,15 @@ class ImageLoader():
 		self.__load_images__()
 
 	def __init_paths__(self):
-		base_path = "/home/ml/Downloads/DeepLearningFiles/"
+		base_path = "./images/"
 		print("Loading paths")
 	
 		for directory in os.listdir(base_path):
-			for file in os.listdir(base_path + directory):
-				self.im_paths.append(base_path + directory + "/" + file)
-				print_progress()
+			if not directory.startswith("."):
+				for file in os.listdir(base_path + directory):
+					if not file.startswith("."):
+						self.im_paths.append(base_path + directory + "/" + file)
+						print_progress()
 
 		print("\n")
 
