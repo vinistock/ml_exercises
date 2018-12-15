@@ -1,4 +1,5 @@
 car_dataset_features/images/**/*
 car_dataset_features/models/model.hdf5
+car_dataset_features/features/*
 .DS_Store
 !.gitkeep

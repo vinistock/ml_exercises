@@ -61,12 +61,24 @@ class Network():
 
 	def extract_features(self, images, paths):
 		print("Extracting features")
-		car_features = []
+		i = 0
 
 		for img in images:
-			# TODO: Save features to a file with the class name and instance index		
-			car_features.append(self.get_features([img[np.newaxis, ...], 0])[0])
-			# np.savez_compressed("cat.npz", features)
+			features = self.get_features([img[np.newaxis, ...], 0])[0]
+			
+			if "Onix" in paths[i]:
+				file_name = "onix_" + `i`
+			elif "Ka" in paths[i]:
+				file_name = "ka_" + `i`
+			elif "HB20" in paths[i]:
+				file_name = "hb20_" + `i`
+			elif "Sandero" in paths[i]:
+				file_name = "sandero_" + `i`
+			else:
+				file_name = "gol_" + `i`
+			
+			np.savez_compressed("features/" + file_name + ".npz", features)
+			i += 1
 			print_progress()
 
 def main():
