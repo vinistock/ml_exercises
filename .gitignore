@@ -1,5 +1,9 @@
 car_dataset_features/images/**/*
 car_dataset_features/models/model.hdf5
 car_dataset_features/features/*
+object_detection/
+data/
+person_detection/tiny_yolo_voc.h5
+person_detection/pedestrian.mp4
 .DS_Store
 !.gitkeep
