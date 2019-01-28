@@ -7,3 +7,4 @@ person_detection/tiny_yolo_voc.h5
 person_detection/pedestrian.mp4
 .DS_Store
 !.gitkeep
+__pycache__
